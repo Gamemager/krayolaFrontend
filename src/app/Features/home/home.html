@@ -1,0 +1,111 @@
+<section class="hero-section d-flex align-items-center position-relative overflow-hidden">
+  
+  <!-- Imagen de Fondo -->
+  <div class="hero-bg position-absolute top-0 start-0 w-100 h-100">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
+    <img src="assets/images/hero-bg.jpg" alt="Fondo Krayola" class="w-100 h-100 object-fit-cover">
+  </div>
+
+  <div class="container position-relative z-2">
+    <!-- Ajustamos padding-bottom para dejar espacio a la barra inferior -->
+    <div class="row min-vh-100 align-items-center justify-content-center justify-content-lg-start pt-5 pb-5">
+      
+      <div class="col-11 col-md-10 col-lg-8 text-center text-lg-start">
+        
+        <span class="badge bg-orange text-white mb-3 px-3 py-2 rounded-pill fade-in-down delay-100 shadow-sm">
+          REPUESTOS & RELOJERÍA
+        </span>
+        
+        <h1 class="hero-title fw-bold text-white text-uppercase lh-1 mb-4 fade-in-up delay-200 impact-font">
+          TU TIEMPO <br>
+          <span class="text-stroke">TU MOTOR</span>
+        </h1>
+        
+        <p class="hero-subtitle text-light opacity-75 mb-4 fade-in-up delay-300 mx-auto mx-lg-0">
+          Encuentra la pieza exacta para tu moto y el estilo perfecto para tu muñeca. 
+          Calidad garantizada en cada repuesto.
+        </p>
+
+        <!-- Botones -->
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start fade-in-up delay-400 mb-5">
+          <a routerLink="/tienda" class="btn btn-primary btn-lg px-5 py-3 rounded-0 fw-bold text-uppercase hover-scale">
+            Ver Catálogo
+          </a>
+          <a routerLink="/nosotros" class="btn btn-outline-light btn-lg px-5 py-3 rounded-0 fw-bold text-uppercase hover-scale">
+            Conócenos
+          </a>
+        </div>
+
+        <!-- Contadores Dinámicos (Social Proof) -->
+        <div class="row fade-in-up delay-400 justify-content-center justify-content-lg-start g-4">
+          <div class="col-auto text-center text-lg-start border-end border-secondary border-opacity-50 pe-4">
+            <h3 class="fw-bold text-white mb-0">+500</h3>
+            <span class="text-orange small text-uppercase fw-bold">Referencias</span>
+          </div>
+          <div class="col-auto text-center text-lg-start border-end border-secondary border-opacity-50 pe-4">
+            <h3 class="fw-bold text-white mb-0">+1k</h3>
+            <span class="text-orange small text-uppercase fw-bold">Clientes</span>
+          </div>
+          <div class="col-auto text-center text-lg-start">
+            <h3 class="fw-bold text-white mb-0">24/7</h3>
+            <span class="text-orange small text-uppercase fw-bold">Soporte</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Confianza (Bottom Bar) -->
+<!-- === VERSIÓN MÓVIL: CARRUSEL COMPACTO (Solo visible en celulares) === -->
+<div class="position-absolute bottom-0 start-0 w-100 pb-4 d-md-none z-3 fade-in-up delay-400">
+  <div #trustCarouselElement id="trustCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      
+      <!-- Item 1 -->
+      <div class="carousel-item active text-center">
+        <div class="d-inline-flex align-items-center gap-2 bg-black-glass px-4 py-2 rounded-pill border border-white border-opacity-10">
+          <i class="bi bi-truck fs-5 text-orange"></i>
+          <span class="text-white small fw-bold text-uppercase tracking-wide">Envíos a todo el país</span>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="carousel-item text-center">
+        <div class="d-inline-flex align-items-center gap-2 bg-black-glass px-4 py-2 rounded-pill border border-white border-opacity-10">
+          <i class="bi bi-shield-check fs-5 text-orange"></i>
+          <span class="text-white small fw-bold text-uppercase tracking-wide">Garantía Asegurada</span>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="carousel-item text-center">
+        <div class="d-inline-flex align-items-center gap-2 bg-black-glass px-4 py-2 rounded-pill border border-white border-opacity-10">
+          <i class="bi bi-whatsapp fs-5 text-orange"></i>
+          <span class="text-white small fw-bold text-uppercase tracking-wide">Asesoría Personalizada</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- === VERSIÓN ESCRITORIO: BARRA EXTENDIDA (Solo visible en PC/Tablet) === -->
+<div class="trust-bar position-absolute bottom-0 start-0 w-100 bg-black-glass border-top border-white border-opacity-10 py-3 z-3 fade-in-up delay-400 d-none d-md-block">
+  <div class="container">
+    <div class="row justify-content-around text-center text-white-50 small text-uppercase fw-bold tracking-wide">
+      <div class="col-auto d-flex align-items-center gap-2">
+        <i class="bi bi-truck fs-5 text-orange"></i> Envíos a todo el país
+      </div>
+      <div class="col-auto d-flex align-items-center gap-2">
+        <i class="bi bi-shield-check fs-5 text-orange"></i> Garantía Asegurada
+      </div>
+      <div class="col-auto d-flex align-items-center gap-2">
+        <i class="bi bi-whatsapp fs-5 text-orange"></i> Asesoría Personalizada
+      </div>
+    </div>
+  </div>
+</div>
+  
+</section>
+

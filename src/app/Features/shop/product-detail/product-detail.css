@@ -1,0 +1,19 @@
+.product-image-container {
+  min-height: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  
+  /* Efecto de brillo de fondo sutil */
+  background: radial-gradient(circle at center, #7c7878 0%, #484444 100%);
+}
+
+.scale-hover {
+  transition: transform 0.5s ease;
+}
+
+.group:hover .scale-hover {
+  transform: scale(1.05) rotate(-2deg); /* Pequeña rotación dinámica */
+}
+
+.ls-1 {
+  letter-spacing: 1px;
+}

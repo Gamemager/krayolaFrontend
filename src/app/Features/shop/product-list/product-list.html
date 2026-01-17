@@ -1,0 +1,58 @@
+<section class="py-5 bg-black min-vh-100">
+  <div class="container pt-5">
+      <div class="hero-bg position-absolute top-0 start-0 w-100 h-100">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
+    <img src="assets/images/hero-bg.jpg" alt="Fondo Krayola" class="w-100 h-100 object-fit-cover">
+  </div>
+    
+    <!-- Encabezado con botón de volver -->
+    <div class="d-flex align-items-center mb-5">
+      <a routerLink="/tienda" class="btn btn-outline-secondary rounded-circle me-3">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <div>
+        <span class="text-orange text-uppercase small fw-bold ls-2">Catálogo</span>
+        <h2 class="text-white display-5 fw-bold m-0">{{ categoryTitle }}</h2>
+      </div>
+    </div>
+@if (isLoading) {
+  <div class="col-12 text-center py-5">
+    <div class="spinner-border text-orange" role="status"></div>
+  </div>
+}
+
+<!-- Grilla -->
+<div class="row g-4" *ngIf="!isLoading">
+  
+  <!-- Loop -->
+  <div class="col-sm-6 col-md-4 col-lg-3 fade-in-up" *ngFor="let product of products">
+    <div class="card h-100 bg-dark border-0 rounded-4 overflow-hidden product-card">
+      
+      <div class="position-relative">
+        <!-- OJO: MySQL devuelve 'image_url', no 'image' -->
+        <img [src]="product.image_url" [alt]="product.name" class="card-img-top object-fit-cover" style="height: 250px;">
+        <span class="badge bg-orange position-absolute top-0 end-0 m-3 rounded-pill">Nuevo</span>
+      </div>
+
+      <div class="card-body d-flex flex-column p-4">
+        <h5 class="card-title text-white fw-bold mb-1">{{ product.name }}</h5>
+        <p class="text-secondary small mb-3 flex-grow-1 text-truncate">{{ product.description }}</p>
+        
+        <div class="d-flex align-items-center justify-content-between mt-auto">
+          <span class="text-white fw-bold fs-5">${{ product.price | number }}</span>
+          <a [routerLink]="['/tienda/producto', product.id]" class="btn btn-sm btn-outline-light rounded-pill px-3">
+            Ver <i class="bi bi-eye ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="products.length === 0" class="col-12 text-center py-5">
+    <p class="text-secondary fs-4">No hay productos disponibles en esta categoría aún.</p>
+    <i class="bi bi-box-seam fs-1 text-dark"></i>
+  </div>
+
+</div>

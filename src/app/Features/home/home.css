@@ -1,0 +1,23 @@
+.text-orange { color: #FF6600 !important; }
+.bg-orange { background-color: #FF6600 !important; }
+.border-orange { border-color: #FF6600 !important; }
+
+/* Efecto Hover en las Cards */
+.bg-black-glass-hover {
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.bg-black-glass-hover:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    border-color: #FF6600 !important; /* Borde naranja al pasar el mouse */
+}
+
+/* Botón outline que se vuelve naranja */
+.hover-orange:hover {
+    background-color: #FF6600;
+    border-color: #FF6600;
+    color: white;
+}

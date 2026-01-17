@@ -1,0 +1,240 @@
+/* Bootstrap is loaded via angular.json, so no import is needed here. */
+
+/* // Personalización de variables (Tema Krayola) */
+:root {
+  --bs-body-bg: #000000;            /* Fondo totalmente negro*/
+  --bs-body-color: #f8f9fa;         /* Texto casi blanco*/
+  --bs-primary: #ff6600;            /* Naranja Vibrante (Color de marca)*/
+  --bs-primary-rgb: 255, 102, 0;    
+  --bs-dark: #121212;               /* Negro suave para tarjetas/headers*/
+}
+
+/* // Clases utilitarias personalizadas */
+.text-orange {
+  color: var(--bs-primary) !important;
+}
+
+.bg-black-gradient {
+  background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(18,18,18,1) 100%);
+}
+
+/* // Animación de entrada suave */
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- HERO SECTION STYLES --- */
+
+/* Tipografía Impactante (Si puedes, importa una fuente como 'Anton' o 'Oswald' de Google Fonts) */
+.impact-font {
+  font-family: 'Arial Black', 'Impact', sans-serif; 
+  letter-spacing: -2px;
+}
+
+/* Efecto de texto hueco (Outline) */
+.text-stroke {
+  -webkit-text-stroke: 2px var(--bs-primary);
+  color: transparent; 
+}
+
+/* Fondo y Altura */
+.hero-section {
+  min-height: 100vh; /* Ocupa toda la pantalla */
+  background-color: #000;
+}
+
+/* Color Naranja Personalizado (Krayola) */
+.bg-orange {
+  background-color: var(--bs-primary) !important;
+}
+
+.text-orange {
+  color: var(--bs-primary) !important;
+}
+
+/* Botones Hover */
+.hover-scale {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.3);
+  }
+}
+
+/* --- HERO RESPONSIVE STYLES --- */
+
+/* 1. Tipografía Inteligente (Fluid Typography) */
+.hero-title {
+  /* clamp(minimo, ideal, maximo) */
+  font-size: clamp(3.5rem, 8vw, 7rem); 
+  letter-spacing: -1px;
+  
+  /* En móviles, reducimos el espacio entre líneas */
+  @media (max-width: 576px) {
+    line-height: 1.1 !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem); /* Texto legible en cualquier pantalla */
+  max-width: 600px; /* Evita que el texto se estire demasiado en monitores anchos */
+}
+
+/* 2. Ajuste de Altura para Celulares */
+.hero-section {
+  min-height: 100vh;
+  /* svh = Small Viewport Height (ignora la barra de navegación del navegador móvil) */
+  min-height: 100svh; 
+}
+
+/* 3. Botones Responsivos */
+.btn-lg {
+  @media (max-width: 576px) {
+    width: 100%; /* Botones ancho completo en celular */
+    padding: 1rem !important;
+    font-size: 1rem;
+  }
+}
+
+/* 4. Corrección del Navbar en Móvil */
+/* Asegura que el menú desplegable tenga fondo oscuro y no sea transparente */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: rgba(0, 0, 0, 0.95); /* Fondo casi negro */
+    padding: 1rem;
+    border-radius: 0 0 10px 10px;
+    margin-top: 10px;
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* --- ANIMACIONES --- */
+
+/* Fade In Up (Sube y aparece) */
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-down {
+  opacity: 0;
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+/* Retardos para efecto cascada */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.3s; }
+.delay-300 { animation-delay: 0.5s; }
+.delay-400 { animation-delay: 0.7s; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación de rebote para la flecha */
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+
+/* --- TRUST BAR STYLES --- */
+.bg-black-glass {
+  background: rgba(0, 0, 0, 0.7); /* Negro semitransparente*/
+  backdrop-filter: blur(10px);    /* Efecto borroso detrás*/
+  -webkit-backdrop-filter: blur(10px);
+}
+.position-md-absolute {
+  @media (min-width: 768px) {
+    position: absolute !important;
+  }
+  @media (max-width: 767px) {
+    position: relative !important;
+    background: #000; /* Fondo negro sólido en celular para mejor lectura */
+    border-top: 1px solid #333;
+    margin-top: 2rem; /* Espacio con el contenido de arriba */
+  }
+}
+/* Fondo oscuro translúcido para las píldoras del carrusel */
+.bg-black-glass {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.tracking-wide {
+  letter-spacing: 1px;
+}
+
+/* Ajuste para iconos de bootstrap */
+.bi {
+  vertical-align: -0.125em; /* Alineación perfecta con el texto */
+}
+
+/* --- WHATSAPP FLOAT BUTTON --- */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366; /* Verde Oficial WhatsApp */
+  color: white;
+  border-radius: 50%;
+  font-size: 30px;
+  z-index: 1000; /* Siempre encima de todo */
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: #128c7e; /* Verde más oscuro al pasar mouse */
+    transform: scale(1.1); /* Crece un poquito */
+    color: white;
+  }
+
+  /* Animación de Pulso */
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* Ajuste para móviles: un poco más pequeño y pegado */
+@media (max-width: 576px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
