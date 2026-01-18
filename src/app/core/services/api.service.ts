@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000/api'; // URL de tu backend
+  private apiUrl = 'https://krayolabackend-production.up.railway.app/api'; // URL de tu backend
 
   constructor(private http: HttpClient) { }
 
