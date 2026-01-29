@@ -1,51 +1,59 @@
 <header class="bg-white shadow-md sticky top-0 z-50">
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark bg-opacity-75 backdrop-blur">
-  <div class="container">
-    <!-- Logo -->
-    <a class="navbar-brand fw-bold text-uppercase tracking-wider" routerLink="/">
-      Krayola<span class="text-orange">Store</span>
-    </a>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark bg-opacity-75 backdrop-blur">
+    <div class="container">
+      <!-- Logo: Cierra el menú al dar clic -->
+      <a class="navbar-brand fw-bold text-uppercase tracking-wider" routerLink="/" (click)="closeMenu()">
+        Krayola<span class="text-orange">Store</span>
+      </a>
 
-    <!-- Botón Hamburguesa Móvil -->
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- Botón Hamburguesa Móvil -->
+      <!-- CAMBIO CRÍTICO: Quitamos data-bs-toggle y usamos (click) de Angular -->
+      <button 
+        class="navbar-toggler border-0" 
+        type="button" 
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="isMenuOpen"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- Menú -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-center gap-3">
-        <li class="nav-item">
-          <a class="nav-link text-white opacity-75 hover-opacity-100" routerLink="/">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white opacity-75 hover-opacity-100" routerLink="/tienda">Catálogo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white opacity-75 hover-opacity-100" routerLink="/nosotros">Nosotros</a>
-        </li>
-        <!-- Icono Carrito con Badge -->
-        <li class="nav-item ms-lg-3">
-<button class="btn position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-  <i class="bi bi-cart fs-5 text-white"></i>
-  <!-- Badge Contador -->
-  <span *ngIf="cartService.count > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-orange">
-    {{ cartService.count }}
-  </span>
-</button>
-        </li>
-      </ul>
+      <!-- Menú -->
+      <!-- CAMBIO CRÍTICO: [class.show] controla la visibilidad -->
+      <div class="collapse navbar-collapse justify-content-end" 
+           [class.show]="isMenuOpen" 
+           id="navbarNav">
+           
+        <ul class="navbar-nav align-items-center gap-3">
+          <li class="nav-item">
+            <a class="nav-link text-white opacity-75 hover-opacity-100" routerLink="/" (click)="closeMenu()">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white opacity-75 hover-opacity-100" routerLink="/tienda" (click)="closeMenu()">Catálogo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white opacity-75 hover-opacity-100" routerLink="/nosotros" (click)="closeMenu()">Nosotros</a>
+          </li>
+
+          <!-- Carrito -->
+          <li class="nav-item ms-lg-3">
+            <button class="btn position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" (click)="closeMenu()">
+              <i class="bi bi-cart fs-5 text-white"></i>
+              <span *ngIf="cartService.count > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-orange">
+                {{ cartService.count }}
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- Estilo extra para el efecto borroso -->
-<style>
-  .backdrop-blur {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  .hover-opacity-100:hover { opacity: 1 !important; color: var(--bs-primary) !important; transition: 0.3s; }
-</style>
-
+  <style>
+    .backdrop-blur {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .hover-opacity-100:hover { opacity: 1 !important; color: var(--bs-primary) !important; transition: 0.3s; }
+  </style>
 </header>
