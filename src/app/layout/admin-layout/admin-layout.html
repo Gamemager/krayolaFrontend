@@ -1,0 +1,114 @@
+<div class="d-flex min-vh-100 bg-admin position-relative overflow-hidden">
+  
+  <!-- ==========================================
+       SIDEBAR ESCRITORIO (Solo PC > 992px) 
+       ========================================== -->
+  <aside class="bg-dark text-white p-3 d-none d-lg-block shadow-lg position-sticky top-0 vh-100" 
+         style="width: 260px; min-width: 260px; background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%); z-index: 1000;">
+    
+    <h4 class="text-orange mb-4 text-center fw-bold py-3 border-bottom border-secondary">
+      Admin Panel
+    </h4>
+    
+    <ul class="nav flex-column gap-2">
+      <li class="nav-item">
+        <a routerLink="/admin/dashboard" routerLinkActive="active-link" class="nav-link text-white rounded transition-all">
+          <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/productos" routerLinkActive="active-link" class="nav-link text-white rounded transition-all">
+          <i class="bi bi-box-seam me-2"></i> Productos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/categorias" routerLinkActive="active-link" class="nav-link text-white rounded transition-all">
+          <i class="bi bi-tags me-2"></i> Categorías
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/ventas" routerLinkActive="active-link" class="nav-link text-white rounded transition-all">
+          <i class="bi bi-receipt me-2"></i> Ventas
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/usuarios" routerLinkActive="active-link" class="nav-link text-white rounded transition-all">
+          <i class="bi bi-people me-2"></i> Usuarios
+        </a>
+      </li>
+      <li class="mt-auto pt-3 border-top border-secondary"></li>
+      <li class="nav-item">
+        <a routerLink="/" class="nav-link text-white opacity-75 hover-opacity-100">
+          <i class="bi bi-arrow-left me-2"></i> Volver a Tienda
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+
+  <!-- ==========================================
+       SIDEBAR MÓVIL (Overlay)
+       ========================================== -->
+  
+  <!-- Backdrop -->
+  <div class="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50" 
+       style="z-index: 1040;" 
+       *ngIf="isSidebarOpen" 
+       (click)="toggleSidebar()">
+  </div>
+
+  <!-- Menú Slide-in -->
+  <div class="position-fixed top-0 start-0 h-100 bg-dark text-white shadow-lg transition-transform"
+       [style.transform]="isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)'"
+       style="width: 280px; z-index: 1050; transition: transform 0.3s ease-in-out;">
+       
+      <div class="p-3 border-bottom border-secondary d-flex justify-content-between align-items-center">
+        <h5 class="text-orange fw-bold m-0">Admin Panel</h5>
+        <button type="button" class="btn btn-sm btn-outline-light border-0" (click)="toggleSidebar()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-3 overflow-auto h-100">
+        <ul class="nav flex-column gap-2">
+          <li class="nav-item"><a routerLink="/admin/dashboard" (click)="toggleSidebar()" class="nav-link text-white py-3 border-bottom border-secondary border-opacity-25"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+          <li class="nav-item"><a routerLink="/admin/productos" (click)="toggleSidebar()" class="nav-link text-white py-3 border-bottom border-secondary border-opacity-25"><i class="bi bi-box-seam me-2"></i> Productos</a></li>
+          <li class="nav-item"><a routerLink="/admin/categorias" (click)="toggleSidebar()" class="nav-link text-white py-3 border-bottom border-secondary border-opacity-25"><i class="bi bi-tags me-2"></i> Categorías</a></li>
+          <li class="nav-item"><a routerLink="/admin/usuarios" (click)="toggleSidebar()" class="nav-link text-white py-3 border-bottom border-secondary border-opacity-25"><i class="bi bi-people me-2"></i> Usuarios</a></li>
+          <li class="nav-item"><a routerLink="/admin/ventas" (click)="toggleSidebar()" class="nav-link text-white py-3 border-bottom border-secondary border-opacity-25"><i class="bi bi-receipt me-2"></i> Ventas</a></li>
+          <li class="nav-item mt-4"><a routerLink="/" (click)="toggleSidebar()" class="btn btn-outline-light w-100 text-start"><i class="bi bi-arrow-left me-2"></i> Volver a Tienda</a></li>
+        </ul>
+      </div>
+  </div>
+
+
+  <!-- ==========================================
+       CONTENIDO PRINCIPAL 
+       ========================================== -->
+  <main class="flex-grow-1 d-flex flex-column min-vh-100 w-100 bg-light" style="overflow-x: hidden;">
+    
+    <!-- Navbar Móvil -->
+    <nav class="navbar navbar-dark bg-dark d-lg-none px-3 shadow-sm sticky-top">
+      <div class="d-flex align-items-center w-100">
+        <button class="btn btn-link text-white p-0 me-3 border-0" (click)="toggleSidebar()">
+          <i class="bi bi-list fs-1"></i>
+        </button>
+        <span class="navbar-brand mb-0 h1 fw-bold text-orange">Krayola Admin</span>
+      </div>
+    </nav>
+
+    <!-- Contenedor con padding responsive (menos padding en móvil) -->
+    <div class="container-fluid p-2 p-md-4">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+</div>
+
+<style>
+  .text-orange { color: #ff6600 !important; }
+  .active-link { background-color: #ff6600 !important; color: white !important; font-weight: 600; }
+  .transition-all { transition: all 0.2s ease-in-out; }
+  .bg-black { background-color: #000; }
+  a { text-decoration: none; }
+</style>

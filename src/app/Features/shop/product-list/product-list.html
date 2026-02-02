@@ -1,58 +1,155 @@
-<section class="py-5 bg-black min-vh-100">
-  <div class="container pt-5">
-      <div class="hero-bg position-absolute top-0 start-0 w-100 h-100">
+<section class="py-5 bg-black min-vh-100 position-relative">
+  <!-- Hero Background -->
+  <div class="hero-bg position-absolute top-0 start-0 w-100 h-100 z-0">
     <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
-    <img src="assets/images/hero-bg.jpg" alt="Fondo Krayola" class="w-100 h-100 object-fit-cover">
+    <img src="assets/images/hero-bg.jpg" alt="Fondo" class="w-100 h-100 object-fit-cover">
   </div>
     
-    <!-- Encabezado con botón de volver -->
-    <div class="d-flex align-items-center mb-5">
-      <a routerLink="/tienda" class="btn btn-outline-secondary rounded-circle me-3">
-        <i class="bi bi-arrow-left"></i>
-      </a>
-      <div>
-        <span class="text-orange text-uppercase small fw-bold ls-2">Catálogo</span>
-        <h2 class="text-white display-5 fw-bold m-0">{{ categoryTitle }}</h2>
+  <div class="container pt-5 position-relative z-1">
+    
+    <!-- Header de Sección -->
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+      <div class="d-flex align-items-center">
+        <a routerLink="/tienda" class="btn btn-outline-secondary rounded-circle me-3 border-0 bg-dark bg-opacity-50 text-white hover-scale">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+        <div>
+          <span class="text-orange text-uppercase small fw-bold ls-2 d-block mb-1">Catálogo</span>
+          <h2 class="text-white display-5 fw-bold m-0 lh-1">{{ categoryTitle }}</h2>
+        </div>
       </div>
     </div>
-@if (isLoading) {
-  <div class="col-12 text-center py-5">
-    <div class="spinner-border text-orange" role="status"></div>
-  </div>
-}
 
-<!-- Grilla -->
-<div class="row g-4" *ngIf="!isLoading">
-  
-  <!-- Loop -->
-  <div class="col-sm-6 col-md-4 col-lg-3 fade-in-up" *ngFor="let product of products">
-    <div class="card h-100 bg-dark border-0 rounded-4 overflow-hidden product-card">
+    <!-- NUEVO DISEÑO DE FILTROS (Pills Horizontales) -->
+    <!-- Solo se muestra si no está cargando y hay marcas disponibles -->
+    <div class="filter-scroll-container mb-5" *ngIf="!isLoading && availableBrands.length > 0">
+      <div class="d-flex gap-2 overflow-auto pb-2" style="scrollbar-width: none;"> <!-- Ocultar scrollbar pero permitir scroll -->
+        
+        <!-- Botón "Todas" -->
+        <button 
+          class="btn rounded-pill px-4 fw-bold transition-all"
+          [class.btn-orange]="selectedBrand === 'Todas'"
+          [class.btn-dark-glass]="selectedBrand !== 'Todas'"
+          (click)="filterProducts('Todas')">
+          Todas
+        </button>
+
+        <!-- Botones de Marcas -->
+        <button 
+          *ngFor="let brand of availableBrands"
+          class="btn rounded-pill px-4 fw-bold transition-all text-nowrap"
+          [class.btn-orange]="selectedBrand === brand"
+          [class.btn-dark-glass]="selectedBrand !== brand"
+          (click)="filterProducts(brand)">
+          {{ brand }}
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Spinner -->
+    @if (isLoading) {
+      <div class="col-12 text-center py-5 mt-5">
+        <div class="spinner-border text-orange" style="width: 3rem; height: 3rem;" role="status"></div>
+        <p class="text-secondary mt-3 animate-pulse">Cargando colección...</p>
+      </div>
+    }
+
+    <!-- Grilla de Productos -->
+    <div class="row g-4" *ngIf="!isLoading">
       
-      <div class="position-relative">
-        <!-- OJO: MySQL devuelve 'image_url', no 'image' -->
-        <img [src]="product.image_url" [alt]="product.name" class="card-img-top object-fit-cover" style="height: 250px;">
-        <span class="badge bg-orange position-absolute top-0 end-0 m-3 rounded-pill">Nuevo</span>
+      <div class="col-sm-6 col-md-4 col-lg-3 fade-in-up" 
+           *ngFor="let product of displayedProducts; let i = index"
+           [style.animation-delay]="i * 50 + 'ms'"> <!-- Efecto cascada -->
+        
+        <div class="card h-100 bg-dark border-0 rounded-4 overflow-hidden product-card shadow-lg group">
+          
+          <div class="position-relative overflow-hidden">
+            <img [src]="product.image_url" [alt]="product.name" 
+                 class="card-img-top object-fit-cover transition-transform duration-500 group-hover:scale-110" 
+                 style="height: 250px;">
+            
+            <!-- Badge de Marca -->
+            <span class="badge bg-black bg-opacity-75 backdrop-blur position-absolute top-0 start-0 m-3 rounded-pill px-3 py-2 border border-white border-opacity-10 text-uppercase small tracking-wide">
+              {{ product.brandName }}
+            </span>
+          </div>
+
+          <div class="card-body d-flex flex-column p-4">
+            <h5 class="card-title text-white fw-bold mb-1 text-truncate">{{ product.name }}</h5>
+            <!-- Descripción truncada -->
+            <p class="text-secondary small mb-3 flex-grow-1 line-clamp-2 opacity-75">
+              {{ product.description || 'Sin descripción disponible' }}
+            </p>
+            
+            <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top border-secondary border-opacity-25">
+              <div class="d-flex flex-column">
+                <span class="text-secondary x-small text-uppercase">Precio</span>
+                <span class="text-orange fw-bold fs-5">${{ product.price | number }}</span>
+              </div>
+              <a [routerLink]="['/tienda/producto', product.id]" class="btn btn-icon btn-outline-light rounded-circle">
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <div class="card-body d-flex flex-column p-4">
-        <h5 class="card-title text-white fw-bold mb-1">{{ product.name }}</h5>
-        <p class="text-secondary small mb-3 flex-grow-1 text-truncate">{{ product.description }}</p>
-        
-        <div class="d-flex align-items-center justify-content-between mt-auto">
-          <span class="text-white fw-bold fs-5">${{ product.price | number }}</span>
-          <a [routerLink]="['/tienda/producto', product.id]" class="btn btn-sm btn-outline-light rounded-pill px-3">
-            Ver <i class="bi bi-eye ms-1"></i>
-          </a>
+      <!-- Empty State -->
+      <div *ngIf="displayedProducts.length === 0" class="col-12 text-center py-5">
+        <div class="py-5 bg-dark bg-opacity-50 rounded-4 border border-secondary border-opacity-25">
+          <i class="bi bi-search fs-1 text-secondary mb-3 d-block opacity-50"></i>
+          <p class="text-white fs-5 mb-0">No hay resultados para <span class="text-orange fw-bold">"{{ selectedBrand }}"</span>.</p>
+          <button class="btn btn-link text-orange mt-2 text-decoration-none" (click)="filterProducts('Todas')">
+            Ver catálogo completo
+          </button>
         </div>
       </div>
 
     </div>
   </div>
+</section>
 
-  <!-- Empty State -->
-  <div *ngIf="products.length === 0" class="col-12 text-center py-5">
-    <p class="text-secondary fs-4">No hay productos disponibles en esta categoría aún.</p>
-    <i class="bi bi-box-seam fs-1 text-dark"></i>
-  </div>
+<style>
+  /* Nuevos estilos para los filtros modernos */
+  .btn-orange {
+    background-color: var(--bs-primary);
+    color: white;
+    border: 1px solid var(--bs-primary);
+  }
+  
+  .btn-dark-glass {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+  }
+  
+  .btn-dark-glass:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
 
-</div>
+  .transition-all { transition: all 0.3s ease; }
+  
+  .btn-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .backdrop-blur { backdrop-filter: blur(4px); }
+  .x-small { font-size: 0.75rem; }
+  
+  /* Animación pulsante suave para el texto de carga */
+  .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+  }
+</style>

@@ -1,119 +1,151 @@
 <section class="py-5 bg-black min-vh-100 d-flex align-items-center position-relative">
   
-  <!-- Fondo -->
+  <!-- Fondo con Overlay -->
   <div class="hero-bg position-absolute top-0 start-0 w-100 h-100 z-0">
     <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
-    <img src="assets/images/hero-bg.jpg" alt="Fondo" class="w-100 h-100 object-fit-cover">
+    <!-- Asegúrate de que esta imagen exista o usa un placeholder -->
+    <img src="assets/images/hero-bg.jpg" onerror="this.src='assets/images/placeholder.jpg'" alt="Fondo" class="w-100 h-100 object-fit-cover">
   </div>
 
   <!-- Loading Spinner -->
-  <div *ngIf="isLoading" class="container position-relative z-1 text-center">
-    <div class="spinner-border text-orange" role="status"></div>
-  </div>
+  @if (isLoading) {
+    <div class="container position-relative z-1 text-center">
+      <div class="spinner-border text-orange" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  }
 
   <!-- Contenido Principal -->
-  <div class="container pt-5 position-relative z-1" *ngIf="!isLoading && product; else notFoundTemplate">
-    
-    <!-- Botón Volver -->
-    <a [routerLink]="['/tienda', product.category_id]" class="btn btn-outline-secondary mb-4 rounded-pill px-4 fade-in-up">
-      <i class="bi bi-arrow-left me-2"></i> Volver al Catálogo
-    </a>
-
-    <div class="row g-5 align-items-center">
+  @if (!isLoading && product) {
+    <div class="container pt-5 position-relative z-1">
       
-      <!-- IMAGEN (Izquierda) -->
-      <div class="col-lg-6 fade-in-up">
-        <div class="product-image-container bg-dark rounded-4 p-5 text-center position-relative overflow-hidden group border border-secondary border-opacity-25">
-          
-          <!-- Usamos image_url -->
-          <img [src]="product.image_url || 'assets/images/placeholder.jpg'" 
-               [alt]="product.name" 
-               class="img-fluid shadow-lg rounded-3 scale-hover" 
-               style="max-height: 500px; object-fit: contain;">
-          
-          <!-- Badge Categoría -->
-          <span class="badge bg-orange position-absolute top-0 start-0 m-4 rounded-pill text-uppercase ls-1">
-            {{ product.category_id === 1 ? 'Motos' : 'Relojes' }}
-          </span>
+      <!-- Botón Volver -->
+      <a [routerLink]="['/tienda', product.category_id]" class="btn btn-outline-secondary mb-4 rounded-pill px-4 fade-in-up text-decoration-none text-light border-secondary">
+        <i class="bi bi-arrow-left me-2"></i> Volver al Catálogo
+      </a>
 
-        </div>
-      </div>
-
-      <!-- INFO (Derecha) -->
-      <div class="col-lg-6 fade-in-up delay-100 text-white">
-        <h1 class="display-4 fw-bold mb-3">{{ product.name }}</h1>
+      <div class="row g-5 align-items-center">
         
-        <!-- Precio y Stock Dinámico -->
-        <div class="d-flex align-items-center mb-4 gap-3 flex-wrap">
-          <span class="display-6 text-orange fw-bold">${{ product.price | number }}</span>
-          
-          <!-- Badge de Disponibilidad -->
-          <span *ngIf="product.stock > 0; else noStockTemplate" 
-                class="badge bg-success bg-opacity-25 text-success rounded-pill px-3 py-2 d-flex align-items-center">
-            <i class="bi bi-check-circle me-2"></i> Disponible ({{ product.stock }})
-          </span>
-          <ng-template #noStockTemplate>
-            <span class="badge bg-danger bg-opacity-25 text-danger rounded-pill px-3 py-2 d-flex align-items-center">
-              <i class="bi bi-x-circle me-2"></i> Agotado
+        <!-- IMAGEN (Izquierda) -->
+        <div class="col-lg-6 fade-in-up">
+          <div class="product-image-container bg-dark rounded-4 p-5 text-center position-relative overflow-hidden group border border-secondary border-opacity-25 shadow-lg">
+            
+            <img [src]="product.image_url || 'assets/images/placeholder.jpg'" 
+                 [alt]="product.name" 
+                 class="img-fluid shadow rounded-3 scale-hover" 
+                 style="max-height: 500px; object-fit: contain; width: 100%;">
+            
+            <!-- Badge Categoría -->
+            <span class="badge bg-orange position-absolute top-0 start-0 m-4 rounded-pill text-uppercase ls-1 shadow-sm">
+              {{ product.category?.name || 'Producto' }}
             </span>
-          </ng-template>
+
+          </div>
         </div>
 
-        <p class="lead text-secondary mb-4">{{ product.description }}</p>
-
-        <!-- ESPECIFICACIONES TECNICAS -->
-        <!-- Solo se muestra si hay especificaciones parseadas -->
-        <div *ngIf="objectKeys.length > 0" class="mb-5 fade-in-up delay-200">
-          <h6 class="text-white text-uppercase ls-2 mb-3 border-bottom border-secondary border-opacity-25 pb-2" style="font-size: 0.85rem; letter-spacing: 2px;">
-            Especificaciones Técnicas
-          </h6>
+        <!-- INFO (Derecha) -->
+        <div class="col-lg-6 fade-in-up delay-100 text-white">
+          <h1 class="display-4 fw-bold mb-3 lh-1">{{ product.name }}</h1>
           
-          <div class="row g-2">
-            <div class="col-md-6" *ngFor="let key of objectKeys">
-              <div class="d-flex justify-content-between align-items-center bg-dark bg-opacity-50 p-2 rounded border border-secondary border-opacity-10 h-100">
-                <span class="text-secondary small text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ key }}</span>
-                <span class="text-white small fw-bold text-end ms-2">{{ parsedSpecs[key] }}</span>
+          <!-- Precio y Stock -->
+          <div class="d-flex align-items-center mb-4 gap-3 flex-wrap">
+            <span class="display-6 text-orange fw-bold">${{ product.price | number }}</span>
+            
+            @if (product.stock > 0) {
+              <span class="badge bg-success bg-opacity-25 text-success rounded-pill px-3 py-2 d-flex align-items-center border border-success border-opacity-25">
+                <i class="bi bi-check-circle-fill me-2"></i> Disponible ({{ product.stock }})
+              </span>
+            } @else {
+              <span class="badge bg-danger bg-opacity-25 text-danger rounded-pill px-3 py-2 d-flex align-items-center border border-danger border-opacity-25">
+                <i class="bi bi-x-circle-fill me-2"></i> Agotado
+              </span>
+            }
+          </div>
+
+          <p class="lead text-secondary mb-4">{{ product.description }}</p>
+
+          <!-- ESPECIFICACIONES TÉCNICAS (Dinámicas) -->
+          @if (objectKeys.length > 0) {
+            <div class="mb-5 fade-in-up delay-200">
+              <h6 class="text-white text-uppercase ls-2 mb-3 border-bottom border-secondary border-opacity-25 pb-2" style="font-size: 0.85rem; letter-spacing: 2px;">
+                Especificaciones Técnicas
+              </h6>
+              
+              <div class="row g-2">
+                @for (key of objectKeys; track key) {
+                  <div class="col-md-6">
+                    <div class="d-flex justify-content-between align-items-center bg-dark bg-opacity-50 p-2 rounded border border-secondary border-opacity-10 h-100">
+                      <span class="text-secondary small text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ key }}</span>
+                      <span class="text-white small fw-bold text-end ms-2">{{ parsedSpecs[key] }}</span>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
+          }
+          <!-- ======================================= -->
+
+          <!-- Botones de Acción -->
+          <div class="d-flex gap-3 mt-4">
+            <button (click)="addToCart()" 
+                    [disabled]="product.stock === 0"
+                    class="btn btn-primary btn-lg rounded-pill px-5 fw-bold flex-grow-1 flex-md-grow-0 hover-scale shadow-orange">
+              {{ product.stock > 0 ? 'Agregar al Carrito' : 'Sin Stock' }} 
+              <i class="bi bi-cart-plus ms-2"></i>
+            </button>
+            
+            <a href="https://wa.me/573026467557?text=Hola,%20me%20interesa:%20{{product.name}}" 
+               target="_blank" 
+               class="btn btn-outline-success btn-lg rounded-circle p-3 hover-scale d-flex align-items-center justify-content-center" 
+               style="width: 58px; height: 58px;"
+               title="Consultar por WhatsApp">
+              <i class="bi bi-whatsapp fs-4"></i>
+            </a>
           </div>
-        </div>
-        <!-- ======================================= -->
 
-        <!-- Botones de Acción -->
-        <div class="d-flex gap-3">
-          <button (click)="addToCart()" 
-                  [disabled]="product.stock === 0"
-                  class="btn btn-primary btn-lg rounded-pill px-5 fw-bold flex-grow-1 flex-md-grow-0 hover-scale">
-            {{ product.stock > 0 ? 'Agregar al Carrito' : 'Sin Stock' }} 
-            <i class="bi bi-cart-plus ms-2"></i>
-          </button>
-          
-          <a href="https://wa.me/573026467557?text=Hola,%20me%20interesa:%20{{product.name}}" 
-             target="_blank" 
-             class="btn btn-outline-success btn-lg rounded-circle p-3 hover-scale" 
-             title="Consultar por WhatsApp">
-            <i class="bi bi-whatsapp"></i>
-          </a>
-        </div>
-
-        <!-- Info Extra Footer -->
-        <div class="mt-5 border-top border-secondary border-opacity-25 pt-4">
-          <div class="d-flex gap-4 text-secondary small">
-            <div><i class="bi bi-truck me-2 text-orange"></i> Envío Nacional</div>
-            <div><i class="bi bi-shield-check me-2 text-orange"></i> Garantía 30 días</div>
+          <!-- Info Extra Footer -->
+          <div class="mt-5 border-top border-secondary border-opacity-25 pt-4">
+            <div class="d-flex gap-4 text-secondary small">
+              <div><i class="bi bi-truck me-2 text-orange"></i> Envío Nacional</div>
+              <div><i class="bi bi-shield-check me-2 text-orange"></i> Garantía 30 días</div>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Template Not Found -->
-  <ng-template #notFoundTemplate>
-    <div class="container text-center pt-5 mt-5 position-relative z-1" *ngIf="!isLoading">
-      <h2 class="text-white">Producto no encontrado</h2>
-      <a routerLink="/tienda" class="btn btn-primary mt-3">Ir al Catálogo</a>
+  } @else if (!isLoading) {
+    <!-- Template Not Found -->
+    <div class="container text-center pt-5 mt-5 position-relative z-1">
+      <div class="py-5">
+        <i class="bi bi-search display-1 text-secondary opacity-50 mb-3"></i>
+        <h2 class="text-white">Producto no encontrado</h2>
+        <p class="text-secondary mb-4">El producto que buscas no existe o ha sido eliminado.</p>
+        <a routerLink="/tienda" class="btn btn-primary px-4 rounded-pill">Ir al Catálogo</a>
+      </div>
     </div>
-  </ng-template>
-<app-toast></app-toast>
+  }
+
+  <app-toast></app-toast>
 </section>
+
+<style>
+  .text-orange { color: #ff6600 !important; }
+  .bg-orange { background-color: #ff6600 !important; }
+  .shadow-orange { box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3); }
+  
+  .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hover-scale { transition: transform 0.2s ease; }
+  .hover-scale:hover { transform: scale(1.05); }
+  
+  .scale-hover { transition: transform 0.3s ease; }
+  .scale-hover:hover { transform: scale(1.02); }
+</style>

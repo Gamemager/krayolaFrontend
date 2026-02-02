@@ -1,0 +1,127 @@
+<div class="container-fluid p-0">
+  
+  <!-- Encabezado con Total Recaudado -->
+  <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <div>
+      <h3 class="fw-bold m-0 text-dark">Historial de Ventas</h3>
+      <small class="text-muted">{{ orders().length }} transacciones registradas</small>
+    </div>
+    
+    <!-- Tarjeta de Resumen Rápido -->
+    <div class="bg-white px-4 py-2 rounded-pill shadow-sm border d-flex align-items-center">
+      <span class="text-muted small me-2 text-uppercase fw-bold">Total Ingresos:</span>
+      <span class="fw-bold text-success fs-5">{{ totalRevenue() | currency:'USD':'symbol':'1.0-0' }}</span>
+    </div>
+  </div>
+
+  <!-- LOADER -->
+  @if (isLoading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2 text-muted">Cargando ventas...</p>
+    </div>
+  }
+
+  <!-- TABLA DE VENTAS -->
+  @if (!isLoading()) {
+    <!-- Card Blanca que contiene la tabla -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mx-0">
+      <div class="card-body p-0">
+        
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 text-nowrap">
+            <!-- Encabezado Gris Claro -->
+            <thead class="bg-light">
+              <tr>
+                <th class="py-3 ps-3 ps-md-4 text-secondary text-uppercase fs-7 fw-bold border-bottom-0">ID / Fecha</th>
+                <th class="py-3 text-secondary text-uppercase fs-7 fw-bold border-bottom-0">Cliente</th>
+                <th class="py-3 text-secondary text-uppercase fs-7 fw-bold border-bottom-0">Detalle</th>
+                <th class="py-3 text-secondary text-uppercase fs-7 fw-bold border-bottom-0">Total</th>
+                <th class="py-3 pe-3 pe-md-4 text-end text-secondary text-uppercase fs-7 fw-bold border-bottom-0">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (order of orders(); track order.id) {
+                <tr class="border-bottom">
+                  
+                  <!-- ID y Fecha -->
+                  <td class="py-3 ps-3 ps-md-4">
+                    <div class="fw-bold text-dark">#{{ order.id }}</div>
+                    <small class="text-muted" style="font-size: 0.75rem;">
+                      {{ order.createdAt | date:'mediumDate' }}
+                    </small>
+                  </td>
+
+                  <!-- Información del Cliente -->
+                  <td class="py-3">
+                    <div class="d-flex align-items-center">
+                      <!-- Avatar/Icono diferenciado -->
+                      <div class="rounded-circle d-flex align-items-center justify-content-center me-2"
+                           [class]="order.user ? 'bg-primary-subtle text-primary' : 'bg-secondary-subtle text-secondary'"
+                           style="width: 35px; height: 35px; min-width: 35px;">
+                        <i class="bi" [class]="order.user ? 'bi-person-check-fill' : 'bi-person-slash'"></i>
+                      </div>
+                      <div>
+                        <!-- Nombre del invitado o usuario (CORREGIDO PARA USAR name) -->
+                        <div class="fw-bold text-dark text-truncate" style="max-width: 150px;">
+                          {{ order.user ? order.user.name : order.guest_name }}
+                        </div>
+                        <small class="text-muted d-block" style="font-size: 0.7rem;">
+                          {{ order.user ? 'Registrado' : 'Invitado' }}
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Detalle Productos -->
+                  <td class="py-3">
+                    <div class="text-dark fw-medium">
+                      {{ order.items?.length || 0 }} productos
+                    </div>
+                    <small class="text-muted text-truncate d-block" style="max-width: 180px;">
+                      @if (order.items && order.items.length > 0) {
+                        {{ order.items[0].product_name }} 
+                        @if (order.items.length > 1) { <span>+{{ order.items.length - 1 }} más</span> }
+                      }
+                    </small>
+                  </td>
+
+                  <!-- Monto Total -->
+                  <td class="py-3 fw-bold text-success">
+                    {{ order.total_amount | currency:'USD':'symbol':'1.0-0' }}
+                  </td>
+
+                  <!-- Estado -->
+                  <td class="py-3 pe-3 pe-md-4 text-end">
+                    <span class="badge rounded-pill px-3 py-2 border"
+                          [ngClass]="{
+                            'bg-success-subtle text-success border-success-subtle': order.status === 'paid',
+                            'bg-warning-subtle text-warning border-warning-subtle': order.status === 'pending',
+                            'bg-danger-subtle text-danger border-danger-subtle': order.status === 'cancelled'
+                          }">
+                      {{ order.status === 'paid' ? 'Pagado' : 
+                         order.status === 'pending' ? 'Pendiente' : 
+                         order.status === 'shipped' ? 'Enviado' : 'Cancelado' }}
+                    </span>
+                  </td>
+
+                </tr>
+              }
+
+              <!-- Estado Vacío -->
+              @if (orders().length === 0) {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-muted">
+                    <i class="bi bi-receipt fs-1 d-block mb-2 opacity-25"></i>
+                    No hay ventas registradas aún.
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+    </div>
+  }
+</div>

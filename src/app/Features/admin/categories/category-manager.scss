@@ -1,0 +1,37 @@
+  .fade-in { animation: fadeIn 0.3s ease-out; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+  
+  /* ESTILOS FORZADOS PARA FONDO BLANCO */
+  :host {
+    display: block;
+    width: 100%;
+  }
+  
+  :host ::ng-deep .card {
+    background-color: #ffffff !important;
+    border: 1px solid #dee2e6 !important;
+  }
+
+  /* Tabla y Celdas */
+  :host ::ng-deep table, 
+  :host ::ng-deep tr, 
+  :host ::ng-deep th, 
+  :host ::ng-deep td {
+      background-color: #ffffff !important;
+      color: #212529 !important; /* Texto gris oscuro */
+      border-color: #dee2e6 !important;
+  }
+
+  /* Encabezado Tabla */
+  :host ::ng-deep thead th {
+      background-color: #f8f9fa !important; /* Gris muy claro para header */
+      font-weight: 700 !important;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+  }
+
+  /* Hover */
+  :host ::ng-deep tbody tr:hover td {
+      background-color: #f8f9fa !important;
+  }

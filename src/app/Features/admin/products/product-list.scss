@@ -1,0 +1,21 @@
+/* Forzar fondo blanco en toda la tabla y sus celdas */
+:host ::ng-deep table,
+:host ::ng-deep thead,
+:host ::ng-deep tbody,
+:host ::ng-deep tr,
+:host ::ng-deep th,
+:host ::ng-deep td {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border-color: #dee2e6 !important;
+}
+
+/* Opcional: Hover gris claro */
+:host ::ng-deep tbody tr:hover td {
+    background-color: #f8f9fa !important;
+}
+
+/* Asegurar que los badges se vean */
+:host ::ng-deep .badge {
+    color: #000 !important; /* Texto negro para asegurar contraste */
+}

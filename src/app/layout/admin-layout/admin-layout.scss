@@ -1,0 +1,49 @@
+/* Fondo general del Admin */
+.bg-admin {
+  background-color: #f8f9fa; /* Gris muy suave, casi blanco */
+}
+
+/* Tarjetas y Contenedores */
+.card {
+  border: none;
+  border-radius: 12px; /* Bordes más redondeados */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04); /* Sombra sutil */
+  background-color: #ffffff;
+}
+
+/* Tablas */
+.table {
+  background-color: white;
+}
+
+.table thead th {
+  background-color: #f1f5f9; /* Encabezado gris azulado claro */
+  color: #475569; /* Gris oscuro para texto */
+  font-weight: 600;
+  border: none;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8fafc; /* Hover muy sutil */
+}
+
+/* Botones de Acción en Tabla */
+.btn-action {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+}

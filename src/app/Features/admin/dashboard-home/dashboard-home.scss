@@ -1,0 +1,30 @@
+
+:host {
+  display: block;
+  background-color: #f8f9fa; 
+}
+
+.card {
+  background-color: #ffffff !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1) !important;
+}
+
+.text-dark {
+  color: #212529 !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.card-footer {
+  background-color: #ffffff !important;
+}
+.ls-1 { 
+  letter-spacing: 1px; 
+}

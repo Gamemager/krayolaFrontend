@@ -1,0 +1,62 @@
+/* --- FORZADO DE ESTILOS BLANCOS (CRÍTICO) --- */
+
+/* Forzar que el componente ocupe espacio y tenga fondo */
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* Forzar Tarjeta Blanca */
+::ng-deep app-sales-list .card {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+}
+
+/* Forzar Tabla Blanca y Texto Oscuro */
+::ng-deep app-sales-list table {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  --bs-table-bg: #ffffff !important;
+  --bs-table-color: #212529 !important;
+}
+
+/* Forzar Encabezados Grises Claros (Estilo Usuarios) */
+::ng-deep app-sales-list thead th {
+  background-color: #f8f9fa !important; /* Gris muy claro */
+  color: #6c757d !important; /* Gris texto secundario */
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px;
+  border-bottom: 0 !important;
+}
+
+/* Celdas con fondo blanco explícito */
+::ng-deep app-sales-list td {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border-bottom: 1px solid #f2f2f2 !important;
+  vertical-align: middle;
+}
+
+/* Efecto Hover Suave */
+::ng-deep app-sales-list tbody tr:hover td {
+  background-color: #f8f9fa !important;
+}
+
+/* Forzar color de textos específicos si se pierden */
+::ng-deep app-sales-list .text-dark { color: #212529 !important; }
+::ng-deep app-sales-list .text-muted { color: #6c757d !important; }
+
+/* --- BADGES (Estilos Sutiles) --- */
+.bg-success-subtle { background-color: rgba(25, 135, 84, 0.1) !important; }
+.border-success-subtle { border-color: rgba(25, 135, 84, 0.2) !important; }
+
+.bg-warning-subtle { background-color: rgba(255, 193, 7, 0.1) !important; }
+.border-warning-subtle { border-color: rgba(255, 193, 7, 0.2) !important; }
+
+.bg-danger-subtle { background-color: rgba(220, 53, 69, 0.1) !important; }
+.border-danger-subtle { border-color: rgba(220, 53, 69, 0.2) !important; }
+
+.bg-primary-subtle { background-color: rgba(13, 110, 253, 0.1) !important; }
+.bg-secondary-subtle { background-color: rgba(108, 117, 125, 0.1) !important; }

@@ -1,0 +1,39 @@
+<div class="d-flex min-vh-100 bg-light">
+  
+  <!-- 1. EL MENÚ LATERAL (SIDEBAR) -->
+  <!-- Este menú siempre estará visible -->
+  <aside class="bg-dark text-white p-3 d-none d-md-block" style="width: 250px;">
+    <h4 class="text-orange mb-4 text-center">Admin Panel</h4>
+    <ul class="nav flex-column gap-2">
+      <li class="nav-item">
+        <a routerLink="/admin/resumen" routerLinkActive="active-link" class="nav-link text-white">
+          <i class="bi bi-speedometer2 me-2"></i> Resumen
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/productos" routerLinkActive="active-link" class="nav-link text-white">
+          <i class="bi bi-box-seam me-2"></i> Productos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/usuarios" routerLinkActive="active-link" class="nav-link text-white">
+          <i class="bi bi-people me-2"></i> Usuarios
+        </a>
+      </li>
+      <hr class="text-secondary">
+      <li class="nav-item">
+        <a routerLink="/" class="nav-link text-white opacity-50">Volver a Tienda</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- 2. EL CONTENIDO CAMBIANTE -->
+  <main class="flex-grow-1 p-4">
+    <router-outlet></router-outlet> 
+  </main>
+
+</div>
+
+<style>
+  .active-link { background-color: #ff6600; font-weight: bold; }
+</style>

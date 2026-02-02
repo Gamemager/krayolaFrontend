@@ -1,0 +1,93 @@
+<div class="container-fluid p-0">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <h2 class="fw-bold mb-0 text-dark h3">Gestión de Productos</h2>
+    <a routerLink="/admin/productos/nuevo" class="btn btn-primary rounded-pill px-3 shadow-sm btn-sm">
+      <i class="bi bi-plus-lg me-1"></i> Nuevo
+    </a>
+  </div>
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  }
+
+  @if (!isLoading) {
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mx-0">
+      <div class="card-body p-0">
+        
+        <!-- TABLA RESPONSIVE -->
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 text-nowrap">
+            <thead class="bg-light text-dark fw-bold">
+              <tr>
+                <th class="ps-3 ps-md-4 py-3 border-bottom text-dark">Producto</th>
+                <th class="py-3 border-bottom text-dark">Precio</th>
+                <th class="py-3 border-bottom text-dark d-none d-sm-table-cell">Stock</th> <!-- Oculto en móviles muy pequeños -->
+                <th class="py-3 border-bottom text-dark d-none d-md-table-cell">Categoría</th> <!-- Oculto en móviles -->
+                <th class="text-end pe-3 pe-md-4 py-3 border-bottom text-dark">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (product of products; track product.id) {
+                <tr>
+                  <td class="ps-3 ps-md-4">
+                    <div class="d-flex align-items-center">
+                      <img [src]="product.image_url || 'assets/images/placeholder.jpg'" 
+                           class="rounded-3 object-fit-cover border me-2 me-md-3"
+                           width="40" height="40" alt="Img">
+                      <div>
+                        <div class="fw-bold text-dark mb-0 text-truncate" style="max-width: 140px;">{{ product.name }}</div>
+                        <small class="text-muted d-block d-md-none text-truncate" style="max-width: 100px;">
+                          {{ product.stock }} un.
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <td class="fw-bold text-dark">{{ product.price | currency:'USD':'symbol':'1.0-0' }}</td>
+                  
+                  <td class="d-none d-sm-table-cell">
+                    <span [class]="product.stock > 5 ? 'badge bg-success bg-opacity-10 text-success' : 'badge bg-danger bg-opacity-10 text-danger'">
+                      {{ product.stock }} un.
+                    </span>
+                  </td>
+
+                  <td class="d-none d-md-table-cell">
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary border">
+                       {{ product.category?.name || 'General' }}
+                    </span>
+                  </td>
+
+                  <td class="text-end pe-3 pe-md-4">
+                    <div class="btn-group">
+                      <a [routerLink]="['/admin/productos/editar', product.id]" 
+                         class="btn btn-sm btn-light text-primary border-0" title="Editar">
+                         <i class="bi bi-pencil-square"></i>
+                      </a>
+                      <button (click)="deleteProduct(product.id)" 
+                              class="btn btn-sm btn-light text-danger border-0" title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+              @if (products.length === 0) {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-muted">No hay productos.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  }
+  
+  <div class="mt-4 px-2">
+      <app-category-manager></app-category-manager>
+  </div>
+</div>

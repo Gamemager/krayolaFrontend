@@ -1,0 +1,76 @@
+/* Forzar contenedor blanco */
+:host {
+  display: block;
+  background-color: #f8f9fa; /* Fondo gris claro general */
+}
+
+.card {
+  background-color: #ffffff !important;
+  border: 1px solid #e9ecef !important;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02) !important;
+}
+
+/* Títulos y etiquetas */
+h2, h5, label, p {
+  color: #212529 !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Inputs y Selects */
+.form-control, 
+.form-select, 
+textarea {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border: 1px solid #ced4da !important;
+}
+
+.form-control:focus, 
+.form-select:focus {
+  background-color: #ffffff !important;
+  border-color: #86b7fe !important;
+  color: #212529 !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Placeholder */
+::placeholder {
+  color: #adb5bd !important;
+  opacity: 1;
+}
+
+/* Botones */
+.btn-outline-secondary {
+  color: #6c757d !important;
+  border-color: #6c757d !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+/* Sección Especificaciones Técnicas */
+.bg-light {
+  background-color: #f8f9fa !important; /* Asegurar fondo claro */
+}
+
+/* Botones de eliminar especificación */
+.btn-outline-danger {
+  color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+/* Imágenes */
+.img-thumbnail {
+  background-color: #fff !important;
+  border: 1px solid #dee2e6 !important;
+}

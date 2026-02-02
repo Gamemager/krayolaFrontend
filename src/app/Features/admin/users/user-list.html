@@ -1,0 +1,85 @@
+<div class="container-fluid p-0">
+  
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <h3 class="fw-bold m-0 text-dark">Gestión de Usuarios</h3>
+    <span class="badge bg-secondary rounded-pill px-3 py-2">{{ users().length }} Usuarios</span>
+  </div>
+
+  <!-- Card Principal Blanca -->
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mx-0">
+    <div class="card-body p-0">
+      
+      <!-- TABLA RESPONSIVE -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 text-nowrap">
+          <thead class="bg-light">
+            <tr>
+              <th class="py-3 ps-3 ps-md-4 text-dark fw-bold border-bottom-0">Usuario</th>
+              <th class="py-3 text-dark fw-bold border-bottom-0">Email</th>
+              <th class="py-3 text-dark fw-bold border-bottom-0">Rol</th>
+              <th class="py-3 pe-3 pe-md-4 text-end text-dark fw-bold border-bottom-0">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users()" class="border-bottom">
+              
+              <!-- Usuario -->
+              <td class="py-3 ps-3 ps-md-4">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-light-orange text-orange d-flex align-items-center justify-content-center me-2 me-md-3 fw-bold shadow-sm" 
+                       style="width: 35px; height: 35px; min-width: 35px; font-size: 0.9rem;">
+                    {{ user.name ? user.name.charAt(0).toUpperCase() : 'U' }}
+                  </div>
+                  <div>
+                    <h6 class="mb-0 fw-bold text-dark text-truncate" style="max-width: 140px;">{{ user.name }}</h6>
+                    <small class="text-muted d-block d-md-none" style="font-size: 0.7rem;">ID: {{ user._id | slice:0:4 }}...</small>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Email -->
+              <td class="py-3">
+                <div class="text-secondary d-flex align-items-center text-truncate" style="max-width: 180px;">
+                  <i class="bi bi-envelope me-2 text-muted small"></i>
+                  {{ user.email }}
+                </div>
+              </td>
+
+              <!-- Rol -->
+              <td class="py-3">
+                <span *ngIf="user.role === 'admin'" class="badge rounded-pill bg-orange-subtle text-orange px-3 py-2 border border-orange-subtle">
+                  Admin
+                </span>
+                <span *ngIf="user.role !== 'admin'" class="badge rounded-pill bg-blue-subtle text-primary px-3 py-2 border border-blue-subtle">
+                  Cliente
+                </span>
+              </td>
+
+              <!-- Acciones -->
+              <td class="py-3 pe-3 pe-md-4 text-end">
+                <button class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1 px-2 py-1 rounded-3" 
+                        (click)="toggleRole(user)"
+                        title="Cambiar Rol">
+                  <i class="bi bi-arrow-repeat"></i>
+                  <span class="d-none d-lg-inline small fw-medium">
+                    {{ user.role === 'admin' ? 'Hacer Cliente' : 'Hacer Admin' }}
+                  </span>
+                </button>
+              </td>
+
+            </tr>
+
+            <!-- Estado Vacío -->
+            <tr *ngIf="users().length === 0">
+              <td colspan="4" class="text-center py-5 text-muted">
+                 No hay usuarios registrados.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
+  </div>
+</div>

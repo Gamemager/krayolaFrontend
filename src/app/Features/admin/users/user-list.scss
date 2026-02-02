@@ -1,0 +1,100 @@
+/* =========================================
+   ESTILOS TABLA USUARIOS (Tema Claro Forzado)
+   ========================================= */
+
+/* 1. Forzar Fondo Blanco en el Contenedor y Tabla */
+:host {
+  display: block;
+  background-color: #f8f9fa; /* Fondo gris claro general */
+}
+
+.card {
+  background-color: #ffffff !important; /* Card blanca */
+  border: none;
+}
+
+/* 2. Sobrescribir estilos oscuros globales de la tabla */
+.table {
+  --bs-table-bg: #ffffff !important;
+  --bs-table-color: #212529 !important;
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #f8f9fa !important;
+  color: #000000 !important; 
+  border-bottom: 2px solid #dee2e6 !important; 
+  font-weight: 800 !important; 
+  font-size: 0.75rem; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f1f1f1 !important;
+  transition: background-color 0.2s ease;
+}
+
+
+
+/* Hover suave (Gris muy claro) */
+.table-hover tbody tr:hover td {
+  background-color: #fafafa !important;
+  color: #000000 !important;
+}
+
+/* Texto de celdas */
+.table td {
+  background-color: transparent !important; /* Heredar del tr */
+  color: #212529 !important;
+  border-bottom-width: 0 !important; /* Quitar bordes dobles */
+}
+
+/* 3. Estilos de Texto y Badges */
+.fs-7 {
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+/* Colores de Marca */
+$primary-orange: #ff6600;
+
+/* Avatar */
+.bg-light-orange {
+  background-color: #fff0e6 !important;
+  border: 1px solid rgba(255, 102, 0, 0.1);
+  color: $primary-orange !important;
+}
+
+/* Texto oscuro forzado */
+.text-dark {
+  color: #212529 !important;
+}
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Badges */
+.bg-orange-subtle {
+  background-color: rgba(255, 102, 0, 0.08) !important;
+  color: #cc5200 !important;
+}
+.bg-blue-subtle {
+  background-color: rgba(13, 110, 253, 0.08) !important;
+  color: #0a58ca !important;
+}
+
+/* Botones */
+.btn-outline-secondary {
+  border-color: #dee2e6;
+  color: #6c757d;
+  &:hover {
+    background-color: #e9ecef;
+    color: #212529;
+    border-color: #ced4da;
+  }
+}

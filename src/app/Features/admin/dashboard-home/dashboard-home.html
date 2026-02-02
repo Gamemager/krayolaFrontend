@@ -1,0 +1,98 @@
+<div class="container-fluid py-4 px-2 px-md-4">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark mb-0 h3">Resumen General</h2>
+    <span class="text-muted small">Hoy</span>
+  </div>
+
+  <div *ngIf="isLoading()" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="!isLoading()" class="row g-3"> <!-- g-3 para menos espacio en movil -->
+    
+    <!-- TARJETA PRODUCTOS -->
+    <div class="col-12 col-md-4"> <!-- col-12 en movil -->
+      <div class="card border-0 shadow-sm h-100 card-hover bg-white">
+        <div class="position-absolute top-0 start-0 w-100 bg-primary rounded-top" style="height: 5px;"></div>
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h6 class="text-muted text-uppercase fw-bold small ls-1 mb-1">Productos</h6>
+              <h2 class="fw-bold display-5 mb-0 text-dark">{{ stats().productosTotal }}</h2>
+            </div>
+            <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+              <i class="bi bi-box-seam fs-4"></i>
+            </div>
+          </div>
+          <div class="d-flex align-items-center text-muted small">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            <span>{{ stats().productosActivos }} Activos</span>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0 pt-0 pb-3">
+          <a routerLink="/admin/productos" class="btn btn-sm btn-outline-primary w-100 rounded-pill fw-bold">
+            Gestionar <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA USUARIOS -->
+    <div class="col-12 col-md-4">
+      <div class="card border-0 shadow-sm h-100 card-hover bg-white">
+        <div class="position-absolute top-0 start-0 w-100 bg-success rounded-top" style="height: 5px;"></div>
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h6 class="text-muted text-uppercase fw-bold small ls-1 mb-1">Usuarios</h6>
+              <h2 class="fw-bold display-5 mb-0 text-dark">{{ stats().usuariosTotal }}</h2>
+            </div>
+            <div class="icon-box bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+              <i class="bi bi-people fs-4"></i>
+            </div>
+          </div>
+          <div class="d-flex align-items-center text-muted small">
+            <i class="bi bi-shield-lock-fill text-warning me-2"></i>
+            <span>{{ stats().usuariosAdmin }} Admins</span>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0 pt-0 pb-3">
+          <a routerLink="/admin/usuarios" class="btn btn-sm btn-outline-success w-100 rounded-pill fw-bold">
+            Gestionar <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+<!-- TARJETA VENTAS -->
+<div class="col-12 col-md-4">
+  <div class="card border-0 shadow-sm h-100 card-hover bg-white">
+    <div class="position-absolute top-0 start-0 w-100 bg-warning rounded-top" style="height: 5px;"></div>
+    
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+          <h6 class="text-muted text-uppercase fw-bold small ls-1 mb-1">Ventas</h6>
+          <!-- Mostramos la cantidad total -->
+          <h2 class="fw-bold display-5 mb-0 text-dark">{{ stats().ventasTotal }}</h2>
+        </div>
+        <div class="icon-box bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+          <i class="bi bi-receipt fs-4"></i> <!-- Cambié icono a receipt -->
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center text-muted small">
+        <i class="bi bi-graph-up-arrow text-success me-2"></i>
+        <span>Órdenes Registradas</span>
+      </div>
+    </div>
+
+    <div class="card-footer bg-white border-0 pt-0 pb-3">
+      <!-- Ahora el botón lleva a la vista de ventas -->
+      <a routerLink="/admin/ventas" class="btn btn-sm btn-outline-warning text-dark w-100 rounded-pill fw-bold">
+        Ver Historial <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </div>
+</div>

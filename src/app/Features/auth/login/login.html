@@ -1,0 +1,70 @@
+<div class="auth-container d-flex align-items-center justify-content-center min-vh-100 position-relative">
+    <div class="hero-bg position-absolute top-0 start-0 w-100 h-100">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
+    <img src="assets/images/hero-bg.jpg" alt="Fondo Krayola" class="w-100 h-100 object-fit-cover">
+  </div>
+  <!-- Fondo con imagen y overlay -->
+  <div class="bg-image position-absolute top-0 start-0 w-100 h-100"></div>
+  <div class="bg-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+  <!-- Tarjeta Glass -->
+  <div class="auth-card p-4 p-md-5 rounded-4 shadow-lg position-relative z-1 fade-in-up">
+    
+    <div class="text-center mb-4">
+      <h2 class="text-white fw-bold display-6">Bienvenido</h2>
+      <p class="text-secondary small">Ingresa a tu cuenta para continuar</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label text-white-50 small text-uppercase fw-bold ls-1">Email</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-envelope"></i></span>
+          <input 
+            type="email" 
+            class="form-control bg-dark text-white border-secondary" 
+            placeholder="nombre@ejemplo.com"
+            formControlName="email">
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label text-white-50 small text-uppercase fw-bold ls-1">Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-lock"></i></span>
+          <input 
+            type="password" 
+            class="form-control bg-dark text-white border-secondary" 
+            placeholder="••••••••"
+            formControlName="password">
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger py-2 small border-0 bg-danger bg-opacity-25 text-white mb-3">
+        <i class="bi bi-exclamation-circle me-2"></i> {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-orange w-100 py-2 rounded-3 fw-bold text-uppercase ls-1 shadow-sm hover-scale"
+        [disabled]="loginForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Iniciar Sesión</span>
+        <div *ngIf="isLoading" class="spinner-border spinner-border-sm text-white" role="status"></div>
+      </button>
+
+    </form>
+
+    <div class="text-center mt-4">
+      <p class="text-secondary small mb-0">
+        ¿No tienes cuenta? 
+        <a routerLink="/auth/registro" class="text-orange text-decoration-none fw-bold hover-underline">Regístrate aquí</a>
+      </p>
+    </div>
+
+  </div>
+</div>
