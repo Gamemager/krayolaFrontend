@@ -81,9 +81,13 @@
                   <li><hr class="dropdown-divider border-secondary"></li>
                 }
                 
-                <!-- OPCIONES COMUNES (Para Admin y Clientes como 'jose') -->
+                <!-- OPCIONES COMUNES (Para Admin y Clientes) -->
                 <li><a class="dropdown-item" routerLink="/carrito" (click)="closeMenu()">Mi Carrito</a></li>
-                
+                <li>
+                  <a class="dropdown-item text-white hover-bg-secondary" routerLink="/misCompras" (click)="closeMenu()">
+                    <i class="bi bi-clock-history me-2"></i> Historial de Compras
+                  </a>
+                </li>
                 <li><hr class="dropdown-divider border-secondary"></li>
                 
                 <!-- BOTÓN CERRAR SESIÓN (Siempre visible) -->

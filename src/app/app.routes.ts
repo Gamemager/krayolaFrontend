@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './layout/main-layout/main-layout';
 // Importamos el guard (aunque aún no lo usamos en una ruta admin, ya lo tenemos listo)
 import { adminGuard } from './core/guards/admin.guard';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -10,6 +11,11 @@ export const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('./Features/home/home').then(m => m.Home) },
       { path: 'tienda', loadChildren: () => import('./Features/shop/shop.routes').then(m => m.SHOP_ROUTES) },
+      { 
+        path: 'misCompras', 
+        loadComponent: () => import('./Features/client/client-orders/client-orders').then(m => m.ClientOrdersComponent),
+        canActivate: [authGuard] 
+      },
       {
         path: 'auth',
         children: [
@@ -19,6 +25,7 @@ export const routes: Routes = [
       }
     ]
   },
+  
   // Panel de Admin 
   {
     path: 'admin',
