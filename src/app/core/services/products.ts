@@ -14,7 +14,7 @@ export interface Product {
 })
 export class ProductsService {
 
-  private apiUrl = 'https://krayolabackend-production.up.railway.app/api'; // URL de tu backend
+  private apiUrl = 'https://krayola-backend.vercel.app/api'; // URL de tu backend
 
   // Base de datos simulada
   private products: Product[] = [

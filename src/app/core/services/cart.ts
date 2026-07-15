@@ -21,7 +21,7 @@ export class CartService {
   private http: HttpClient = inject(HttpClient);
 
 createPreference() {
-  return this.http.post<any>('https://krayolabackend-production.up.railway.app/api/payments/create_preference', { 
+  return this.http.post<any>('https://krayola-backend.vercel.app/api/payments/create_preference', { 
     items: this.currentItems 
   });
 }

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ApiService {
   // Ajusta la URL si sigue siendo esa o local
-  private apiUrl = 'https://krayolabackend-production.up.railway.app/api'; 
+  private apiUrl = 'https://krayola-backend.vercel.app/api'; 
   
   // Inyección moderna
   private http = inject(HttpClient);
