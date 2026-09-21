@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class UserList {
   private http = inject(HttpClient);
   // URL Correcta (Asegúrate de que esta sea la de producción o desarrollo según corresponda)
-  private apiUrl = 'https://krayolabackend-production.up.railway.app/api/users'; 
+  private apiUrl = 'https://krayola-backend.vercel.app/api/users'; 
   
   users = signal<any[]>([]);
 
