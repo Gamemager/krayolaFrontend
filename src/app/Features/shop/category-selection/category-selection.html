@@ -1,11 +1,11 @@
-<section class="category-section py-5 bg-black min-vh-100 d-flex align-items-center">
+<section class="category-section pb-5 bg-black min-vh-100 d-flex align-items-center position-relative overflow-hidden" style="padding-top: 140px;">
   <div class="container">
     <div class="hero-bg position-absolute top-0 start-0 w-100 h-100">
       <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
       <img src="assets/images/hero-bg.jpg" alt="Fondo Krayola" class="w-100 h-100 object-fit-cover">
     </div>      
     
-    <div class="text-center mb-5 fade-in-up">
+    <div class="text-center mb-5 fade-in-up position-relative z-2">
       <h2 class="display-4 fw-bold text-white text-uppercase">Explora Nuestro <span class="text-orange">Catálogo</span></h2>
       <p class="text-secondary lead">Selecciona una categoría para ver los productos disponibles</p>
     </div>
@@ -17,7 +17,7 @@
       </div>
     }
 
-    <div class="row g-4 justify-content-center">
+    <div class="row g-4 justify-content-center mb-3 position-relative z-2">
 
       <!-- Bucle Dinámico -->
       @for (cat of categories; track cat.id) {
@@ -28,7 +28,7 @@
             <div class="overlay bg-dark position-absolute top-0 start-0 w-100 h-100 opacity-50 z-1 transition-opacity"></div>
             
             <!-- Imagen dinámica usando el helper -->
-            <img [src]="getCategoryImage(cat.name)" [alt]="cat.name" class="w-100 h-100 object-fit-cover scale-hover">
+            <img [src]="getCardImage(cat)" [alt]="cat.name" class="w-100 h-100 object-fit-cover scale-hover">
             
             <div class="card-content position-absolute bottom-0 start-0 w-100 p-4 z-2">
               <h3 class="fw-bold text-white text-uppercase mb-1">{{ cat.name }}</h3>

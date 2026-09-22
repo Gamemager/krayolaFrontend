@@ -41,6 +41,15 @@ export class CategorySelection implements OnInit {
     });
   }
 
+  // Devuelve la imagen a mostrar en la tarjeta: prioriza la imagen subida a Cloudinary,
+  // y si la categoría no tiene imagen propia, usa el helper por nombre como respaldo.
+  getCardImage(cat: any): string {
+    if (cat.image_url) {
+      return cat.image_url;
+    }
+    return this.getCategoryImage(cat.name);
+  }
+
   // Helper para asignar imagen según categoría (Ya que la BD solo tiene nombre)
   getCategoryImage(categoryName: string): string {
     const name = categoryName.toLowerCase();
