@@ -57,6 +57,14 @@ export class ApiService {
     });
   }
 
+  // --- SESIÓN EXPIRADA (llamado desde el interceptor cuando el token vence o es inválido) ---
+  handleSessionExpired() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.currentUser.set(null);
+    this.router.navigate(['/auth/login'], { queryParams: { sessionExpired: '1' } });
+  }
+
   // --------------------------------------------------------------------------------
   // PRODUCTOS
   // --------------------------------------------------------------------------------

@@ -1,8 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 
 @Component({
@@ -13,14 +11,14 @@ import { ApiService } from '../../../core/services/api.service';
   styleUrl: './dashboard-home.scss',
 })
 export class DashboardHome implements OnInit {
-private api = inject(ApiService); // Usamos ApiService que ya tiene headers
+  private api = inject(ApiService);
 
   stats = signal({
     productosTotal: 0,
     productosActivos: 0,
     usuariosTotal: 0,
     usuariosAdmin: 0,
-    ventasTotal: 0 // Cambiamos nombre para ser claros
+    ventasTotal: 0
   });
 
   isLoading = signal(true);
@@ -30,26 +28,18 @@ private api = inject(ApiService); // Usamos ApiService que ya tiene headers
   }
 
   loadStats() {
-    // Usamos los métodos del ApiService que ya tienen autenticación
-    forkJoin({
-      productos: this.api.getProducts(),
-      usuarios: this.api.getUsers(),
-      ventas: this.api.getOrders() // <--- Llamamos a las órdenes
-    }).subscribe({
-      next: (res) => {
-        // Cálculos
-        const productosActivos = res.productos.filter(p => p.stock > 0).length;
-        const admins = res.usuarios.filter(u => u.role === 'admin').length;
-        const totalVentas = res.ventas.length; // Contamos el array de ventas
-
+    // Una sola consulta liviana en vez de 3 peticiones en paralelo
+    // (productos + usuarios + ventas), para reducir el riesgo de que
+    // el backend se quede corto cuando la base de datos "despierta".
+    this.api.getDashboardStats().subscribe({
+      next: (res: any) => {
         this.stats.set({
-          productosTotal: res.productos.length,
-          productosActivos: productosActivos,
-          usuariosTotal: res.usuarios.length,
-          usuariosAdmin: admins,
-          ventasTotal: totalVentas // Asignamos la cantidad real
+          productosTotal: res.productosTotal ?? 0,
+          productosActivos: res.productosActivos ?? 0,
+          usuariosTotal: res.usuariosTotal ?? 0,
+          usuariosAdmin: res.usuariosAdmin ?? 0,
+          ventasTotal: res.ventasTotal ?? 0
         });
-        
         this.isLoading.set(false);
       },
       error: (err) => {

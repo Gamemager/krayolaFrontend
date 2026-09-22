@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 
 @Component({
@@ -11,13 +11,21 @@ import { ApiService } from '../../../core/services/api.service';
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
-export class Login {
+export class Login implements OnInit {
   private fb = inject(FormBuilder);
   private api = inject(ApiService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   isLoading = false;
   errorMessage = '';
+  infoMessage = '';
+
+  ngOnInit() {
+    if (this.route.snapshot.queryParamMap.get('sessionExpired')) {
+      this.infoMessage = 'Tu sesión expiró. Inicia sesión de nuevo.';
+    }
+  }
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
