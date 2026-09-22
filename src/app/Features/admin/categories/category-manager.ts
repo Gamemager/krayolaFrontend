@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
@@ -14,10 +14,15 @@ import Swal from 'sweetalert2';
 export class CategoryManager implements OnInit {
   private api = inject(ApiService);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
 
   categories: any[] = [];
   showForm = false;
   catForm: FormGroup;
+
+  // Imagen de la categoría
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor() {
     this.catForm = this.fb.group({
@@ -30,18 +35,45 @@ export class CategoryManager implements OnInit {
   }
 
   loadCategories() {
-    this.api.getCategories().subscribe(data => this.categories = data);
+    this.api.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error cargando categorías', err);
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   toggleForm() {
     this.showForm = !this.showForm;
     this.catForm.reset();
+    this.selectedFile = null;
+    this.imagePreview = null;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => { this.imagePreview = reader.result; };
+      reader.readAsDataURL(file);
+    }
   }
 
   onSubmit() {
     if (this.catForm.invalid) return;
-    
-    this.api.createCategory(this.catForm.value).subscribe({
+
+    const formData = new FormData();
+    formData.append('name', this.catForm.get('name')?.value);
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
+    this.api.createCategory(formData).subscribe({
       next: () => {
         Swal.fire({
             title: '¡Éxito!',

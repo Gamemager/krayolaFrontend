@@ -74,3 +74,33 @@ textarea {
   background-color: #fff !important;
   border: 1px solid #dee2e6 !important;
 }
+/* Botón "Seleccionar archivo" del input de imagen: por defecto quedaba
+   transparente sobre el fondo blanco del form-control. Lo hacemos visible. */
+input[type="file"].form-control {
+  &::file-selector-button {
+    background-color: #e9ecef !important;
+    color: #212529 !important;
+    border: none !important;
+    border-right: 1px solid #ced4da !important;
+    padding: 0.375rem 0.75rem;
+    margin: -0.375rem -0.75rem;
+    margin-inline-end: 0.75rem;
+    border-radius: 0.375rem 0 0 0.375rem;
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  &::file-selector-button:hover {
+    background-color: #dde1e5 !important;
+  }
+
+  &::-webkit-file-upload-button {
+    background-color: #e9ecef !important;
+    color: #212529 !important;
+    border: none !important;
+    border-right: 1px solid #ced4da !important;
+    padding: 0.375rem 0.75rem;
+    margin: -0.375rem -0.75rem;
+    margin-inline-end: 0.75rem;
+    border-radius: 0.375rem 0 0 0.375rem;
+  }
+}

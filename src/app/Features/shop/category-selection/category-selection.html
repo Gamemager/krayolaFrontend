@@ -10,9 +10,7 @@
       <p class="text-secondary lead">Selecciona una categoría para ver los productos disponibles</p>
     </div>
 
-    <div class="row g-4 justify-content-center">
-      
-          <!-- Loading -->
+    <!-- Loading -->
     @if (isLoading) {
       <div class="text-center text-white">
         <div class="spinner-border text-orange" role="status"></div>
@@ -20,10 +18,10 @@
     }
 
     <div class="row g-4 justify-content-center">
-      
+
       <!-- Bucle Dinámico -->
       @for (cat of categories; track cat.id) {
-        <div class="col-md-6 col-lg-5 fade-in-up">
+        <div class="col-sm-6 col-lg-4 fade-in-up">
           <!-- Notar el routerLink dinámico -->
           <a [routerLink]="['/tienda', cat.id]" class="category-card d-block position-relative overflow-hidden rounded-4 text-decoration-none group">
             
@@ -42,6 +40,5 @@
       }
 
     </div>
-  </div>
   </div>
 </section>

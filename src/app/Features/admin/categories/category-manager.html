@@ -1,45 +1,80 @@
-<div class="card border-0 shadow-sm mt-5">
-      <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-        <h5 class="fw-bold mb-0 text-dark">Gestión de Categorías</h5>
-        <button class="btn btn-sm btn-primary" (click)="toggleForm()">
-          <i class="bi" [class.bi-plus-lg]="!showForm" [class.bi-x-lg]="showForm"></i> 
-          {{ showForm ? 'Cancelar' : 'Nueva Categoría' }}
-        </button>
-      </div>
+<div class="container-fluid p-0">
 
-      <div class="card-body">
-        
-        <!-- Formulario (Oculto por defecto) -->
-        <div *ngIf="showForm" class="mb-4 p-3 bg-light rounded fade-in">
-          <form [formGroup]="catForm" (ngSubmit)="onSubmit()" class="d-flex gap-2">
-            <input type="text" formControlName="name" class="form-control" placeholder="Nombre de la categoría (Ej: Cascos)">
-            <button type="submit" class="btn btn-success" [disabled]="catForm.invalid">Guardar</button>
-          </form>
+  <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <h2 class="fw-bold mb-0 text-dark h3">Gestión de Categorías</h2>
+    <button class="btn btn-sm bg-orange text-white rounded-pill px-3 shadow-sm" (click)="toggleForm()">
+      <i class="bi" [class.bi-plus-lg]="!showForm" [class.bi-x-lg]="showForm"></i>
+      {{ showForm ? 'Cancelar' : 'Nueva Categoría' }}
+    </button>
+  </div>
+
+  <!-- Formulario (Oculto por defecto) -->
+  <div *ngIf="showForm" class="card border-0 shadow-sm rounded-4 mb-3 fade-in">
+    <div class="card-body p-3 p-md-4">
+      <form [formGroup]="catForm" (ngSubmit)="onSubmit()">
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-md-6">
+            <label class="form-label">Nombre de la categoría</label>
+            <input type="text" formControlName="name" class="form-control" placeholder="Ej: Cascos">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">Imagen (opcional)</label>
+            <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event)">
+          </div>
+          <div class="col-12 col-md-2 d-grid">
+            <button type="submit" class="btn bg-orange text-white" [disabled]="catForm.invalid">Guardar</button>
+          </div>
         </div>
+        @if (imagePreview) {
+          <div class="mt-3">
+            <img [src]="imagePreview" class="img-thumbnail" style="max-height: 120px;">
+          </div>
+        }
+      </form>
+    </div>
+  </div>
 
-        <!-- Tabla -->
-        <div class="table-responsive">
-          <table class="table table-hover align-middle">
-            <thead class="table-light">
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th class="text-end">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let cat of categories">
-                <td>#{{ cat.id }}</td>
-                <td class="fw-bold">{{ cat.name }}</td>
-                <td class="text-end">
-                  <button class="btn btn-sm btn-outline-danger" (click)="deleteCategory(cat.id)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
+  <!-- Tabla -->
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mx-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 text-nowrap">
+          <thead class="bg-light text-dark fw-bold">
+            <tr>
+              <th class="ps-3 ps-md-4 py-3 border-bottom text-dark">ID</th>
+              <th class="py-3 border-bottom text-dark">Categoría</th>
+              <th class="text-end pe-3 pe-md-4 py-3 border-bottom text-dark">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cat of categories">
+              <td class="ps-3 ps-md-4">#{{ cat.id }}</td>
+              <td class="fw-bold text-dark">
+                <div class="d-flex align-items-center gap-2">
+                  @if (cat.image_url) {
+                    <img [src]="cat.image_url" class="rounded-3 object-fit-cover border" width="40" height="40" alt="">
+                  } @else {
+                    <span class="rounded-3 border bg-light d-inline-flex align-items-center justify-content-center text-muted"
+                          style="width:40px;height:40px;">
+                      <i class="bi bi-tag"></i>
+                    </span>
+                  }
+                  {{ cat.name }}
+                </div>
+              </td>
+              <td class="text-end pe-3 pe-md-4">
+                <button class="btn btn-sm btn-light text-danger border-0" (click)="deleteCategory(cat.id)" title="Eliminar">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="categories.length === 0">
+              <td colspan="3" class="text-center py-5 text-muted">No hay categorías.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
+
+</div>

@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import Swal from 'sweetalert2';
-import { CategoryManager } from '../categories/category-manager';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, CategoryManager],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss'
 })

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './layout/main-layout/main-layout';
+import { AdminLayout } from './layout/admin-layout/admin-layout';
 // Importamos el guard (aunque aún no lo usamos en una ruta admin, ya lo tenemos listo)
 import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
@@ -30,7 +31,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     canActivate: [adminGuard], // Protección
-    loadComponent: () => import('./Features/admin/dashboard/dashboard').then(m => m.AdminDashboardComponent),
+    component: AdminLayout,
     children: [
       // 1. Redirigir al resumen por defecto
       { path: '', redirectTo: 'resumen', pathMatch: 'full' }, 
@@ -55,12 +56,18 @@ export const routes: Routes = [
         loadComponent: () => import('./Features/admin/products/product-form').then(m => m.ProductForm)
       },
       
-      // 4. Gestión de Usuarios
+      // 4. Gestión de Categorías
+      {
+        path: 'categorias',
+        loadComponent: () => import('./Features/admin/categories/category-manager').then(m => m.CategoryManager)
+      },
+
+      // 5. Gestión de Usuarios
       {
         path: 'usuarios',
         loadComponent: () => import('./Features/admin/users/user-list').then(m => m.UserList)
       },
-      // 5. Gestión de Ventas
+      // 6. Gestión de Ventas
       {
         path: 'ventas',
         loadComponent: () => import('./Features/admin/sales-list/sales-list').then(m => m.SalesListComponent)

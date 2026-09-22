@@ -30,7 +30,10 @@
 
           <div class="col-md-4">
             <label class="form-label">Precio ($)</label>
-            <input type="number" class="form-control" formControlName="price">
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="text" inputmode="numeric" class="form-control" [value]="priceDisplay" (input)="onPriceInput($event)" placeholder="0">
+            </div>
           </div>
 
           <div class="col-md-4">

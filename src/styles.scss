@@ -26,6 +26,17 @@ body, html {
   color: #212529 !important;
 }
 
+/* --bs-body-bg / --bs-body-color están en negro a nivel :root (tema de la
+   tienda). Bootstrap 5.3 usa esas variables como fondo/color por defecto de
+   .form-control, .form-select, etc., así que sin este override cualquier
+   input dentro del panel de admin se ve negro. Se redefinen en claro para
+   todo lo que cuelgue de app-admin-layout, así no hay que parchear cada
+   formulario nuevo por separado. */
+app-admin-layout main {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #212529;
+}
+
 /* Forzar TABLAS BLANCAS en todas las secciones de admin */
 app-admin-layout table, 
 app-product-list table, 

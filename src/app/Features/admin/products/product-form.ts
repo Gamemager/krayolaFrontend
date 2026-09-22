@@ -28,6 +28,9 @@ export class ProductForm implements OnInit {
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
+  // Precio con separador de miles
+  priceDisplay = '';
+
   constructor() {
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -73,6 +76,22 @@ export class ProductForm implements OnInit {
     this.specs.removeAt(index);
   }
 
+  // --- FORMATO DE PRECIO (separador de miles) ---
+
+  private formatThousands(value: number): string {
+    if (!value && value !== 0) return '';
+    return new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(value);
+  }
+
+  onPriceInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const digitsOnly = input.value.replace(/\D/g, '');
+    const numericValue = digitsOnly ? parseInt(digitsOnly, 10) : 0;
+    this.priceDisplay = digitsOnly ? this.formatThousands(numericValue) : '';
+    input.value = this.priceDisplay;
+    this.productForm.get('price')?.setValue(numericValue);
+  }
+
   // --- CARGA DE DATOS ---
 
   loadCategories() {
@@ -91,6 +110,8 @@ export class ProductForm implements OnInit {
           category_id: product.category_id,
           image_url: product.image_url
         });
+
+        this.priceDisplay = this.formatThousands(product.price);
 
         if (product.image_url) {
           this.imagePreview = product.image_url;

@@ -104,8 +104,11 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/categories/${id}`);
   }
 
-  createCategory(category: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/categories`, category, { headers: this.getAuthHeaders() });
+  createCategory(category: any | FormData): Observable<any> {
+    const isFormData = category instanceof FormData;
+    return this.http.post<any>(`${this.apiUrl}/categories`, category, {
+      headers: this.getAuthHeaders(isFormData)
+    });
   }
 
   updateCategory(id: number, category: any): Observable<any> {
