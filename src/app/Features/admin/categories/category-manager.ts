@@ -19,6 +19,7 @@ export class CategoryManager implements OnInit {
   categories: any[] = [];
   showForm = false;
   catForm: FormGroup;
+  editingId: number | null = null;
 
   // Imagen de la categoría
   selectedFile: File | null = null;
@@ -52,6 +53,15 @@ export class CategoryManager implements OnInit {
     this.catForm.reset();
     this.selectedFile = null;
     this.imagePreview = null;
+    this.editingId = null;
+  }
+
+  startEdit(cat: any) {
+    this.editingId = cat.id;
+    this.showForm = true;
+    this.selectedFile = null;
+    this.imagePreview = cat.image_url || null;
+    this.catForm.patchValue({ name: cat.name });
   }
 
   onFileSelected(event: any) {
@@ -71,6 +81,24 @@ export class CategoryManager implements OnInit {
     formData.append('name', this.catForm.get('name')?.value);
     if (this.selectedFile) {
       formData.append('image', this.selectedFile);
+    }
+
+    if (this.editingId) {
+      this.api.updateCategory(this.editingId, formData).subscribe({
+        next: () => {
+          Swal.fire({
+              title: '¡Éxito!',
+              text: 'Categoría actualizada correctamente',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+          });
+          this.loadCategories();
+          this.toggleForm();
+        },
+        error: () => Swal.fire('Error', 'No se pudo actualizar la categoría', 'error')
+      });
+      return;
     }
 
     this.api.createCategory(formData).subscribe({

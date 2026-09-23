@@ -16,6 +16,7 @@ export class DashboardHome implements OnInit {
   stats = signal({
     productosTotal: 0,
     productosActivos: 0,
+    productosInhabilitados: 0,
     usuariosTotal: 0,
     usuariosAdmin: 0,
     ventasTotal: 0
@@ -36,6 +37,7 @@ export class DashboardHome implements OnInit {
         this.stats.set({
           productosTotal: res.productosTotal ?? 0,
           productosActivos: res.productosActivos ?? 0,
+          productosInhabilitados: res.productosInhabilitados ?? 0,
           usuariosTotal: res.usuariosTotal ?? 0,
           usuariosAdmin: res.usuariosAdmin ?? 0,
           ventasTotal: res.ventasTotal ?? 0

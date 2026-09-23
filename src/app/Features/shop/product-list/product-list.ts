@@ -66,8 +66,10 @@ export class ProductList implements OnInit {
               }
               
               // Normalización de marca
-              // Si no encuentra marca, le pone 'Generico' u 'Otras' para que no quede vacío
-              const rawBrand = specs.marca || specs.Marca || specs.brand || 'Otras';
+              // Prioriza el campo dedicado product.brand; si el producto es antiguo y no lo tiene,
+              // cae en las especificaciones (compatibilidad con productos creados antes de este campo).
+              // Si no encuentra nada, le pone 'Otras' para que no quede vacío
+              const rawBrand = product.brand || specs.marca || specs.Marca || specs.brand || 'Otras';
               
               return {
                 ...product,

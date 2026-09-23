@@ -26,7 +26,7 @@ export class ProductList implements OnInit {
   loadProducts() {
     this.isLoading = true;
     
-    this.api.getProducts().subscribe({
+    this.api.getProducts(true).subscribe({
       next: (data) => {
         console.log('Productos cargados:', data); // Debug
         this.products = data;
@@ -37,6 +37,25 @@ export class ProductList implements OnInit {
         console.error('Error cargando productos', err);
         this.isLoading = false;
         this.cdr.detectChanges(); // 3. FORZAR AQUÍ TAMBIÉN
+      }
+    });
+  }
+
+  toggleStatus(product: any) {
+    const willBeActive = !product.active;
+    this.api.toggleProductStatus(product.id).subscribe({
+      next: () => {
+        product.active = willBeActive;
+        this.cdr.detectChanges();
+        Swal.fire({
+          icon: 'success',
+          title: willBeActive ? 'Producto activado' : 'Producto inhabilitado',
+          timer: 1200,
+          showConfirmButton: false
+        });
+      },
+      error: () => {
+        Swal.fire('Error', 'No se pudo cambiar el estado del producto', 'error');
       }
     });
   }

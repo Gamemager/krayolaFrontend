@@ -39,6 +39,7 @@ export class ProductForm implements OnInit {
       stock: [0, [Validators.required, Validators.min(0)]],
       category_id: ['', Validators.required],
       image_url: [''],
+      brand: [''],
       // Inicializamos el array de especificaciones vacío
       specifications: this.fb.array([]) 
     });
@@ -108,7 +109,8 @@ export class ProductForm implements OnInit {
           price: product.price,
           stock: product.stock,
           category_id: product.category_id,
-          image_url: product.image_url
+          image_url: product.image_url,
+          brand: product.brand
         });
 
         this.priceDisplay = this.formatThousands(product.price);
@@ -170,6 +172,7 @@ export class ProductForm implements OnInit {
     formData.append('price', this.productForm.get('price')?.value);
     formData.append('stock', this.productForm.get('stock')?.value);
     formData.append('category_id', this.productForm.get('category_id')?.value);
+    formData.append('brand', this.productForm.get('brand')?.value || '');
     
     if (this.selectedFile) {
       formData.append('image', this.selectedFile);

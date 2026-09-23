@@ -69,9 +69,10 @@ export class ApiService {
   // PRODUCTOS
   // --------------------------------------------------------------------------------
   
-  // Listar todos (Público)
-  getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/products`);
+  // Listar todos (Público). Pasa includeInactive=true (panel admin) para ver también los inhabilitados.
+  getProducts(includeInactive: boolean = false): Observable<any[]> {
+    const url = includeInactive ? `${this.apiUrl}/products?all=true` : `${this.apiUrl}/products`;
+    return this.http.get<any[]>(url);
   }
   
   // Ver uno (Público)
@@ -100,6 +101,11 @@ export class ApiService {
     return this.http.delete<any>(`${this.apiUrl}/products/${id}`, { headers: this.getAuthHeaders() });
   }
 
+  // Activar / Inhabilitar (Admin)
+  toggleProductStatus(id: number): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/products/${id}/status`, {}, { headers: this.getAuthHeaders() });
+  }
+
   // --------------------------------------------------------------------------------
   // CATEGORÍAS (CRUD COMPLETO)
   // --------------------------------------------------------------------------------
@@ -119,8 +125,11 @@ export class ApiService {
     });
   }
 
-  updateCategory(id: number, category: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/categories/${id}`, category, { headers: this.getAuthHeaders() });
+  updateCategory(id: number, category: any | FormData): Observable<any> {
+    const isFormData = category instanceof FormData;
+    return this.http.put<any>(`${this.apiUrl}/categories/${id}`, category, {
+      headers: this.getAuthHeaders(isFormData)
+    });
   }
 
   deleteCategory(id: number): Observable<any> {
